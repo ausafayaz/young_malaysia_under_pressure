@@ -1,0 +1,85 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 330,
+    "title": {
+      "text": "Youth unemployment rate in Malaysia",
+      "subtitle": "Age 15–30, yearly trend from 2016 to 2026"
+    },
+    "data": {
+      "url": "data/lfs_month_youth.csv"
+    },
+    "mark": {
+      "type": "line",
+      "point": {
+        "filled": true,
+        "size": 16
+      },
+      "strokeWidth": 2.5,
+      "color": "#2f6f9f"
+    },
+    "encoding": {
+      "x": {
+        "field": "date",
+        "type": "temporal",
+        "title": "Year",
+        "axis": {
+          "format": "%Y",
+          "labelAngle": 0,
+          "values": [
+            "2016-01-01",
+            "2017-01-01",
+            "2018-01-01",
+            "2019-01-01",
+            "2020-01-01",
+            "2021-01-01",
+            "2022-01-01",
+            "2023-01-01",
+            "2024-01-01",
+            "2025-01-01",
+            "2026-01-01"
+          ]
+        }
+      },
+      "y": {
+        "field": "u_rate_15_30",
+        "type": "quantitative",
+        "title": "Unemployment rate (%)",
+        "scale": {
+          "zero": false
+        }
+      },
+      "tooltip": [
+        {
+          "field": "date",
+          "type": "temporal",
+          "title": "Month",
+          "format": "%b %Y"
+        },
+        {
+          "field": "u_rate_15_30",
+          "type": "quantitative",
+          "title": "Youth unemployment rate (%)",
+          "format": ".1f"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "gridColor": "#e6edf3"
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12
+      }
+    }
+  }

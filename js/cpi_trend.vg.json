@@ -1,0 +1,238 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 420,
+    "title": {
+      "text": "How selected living costs have changed over time",
+      "subtitle": "Derived CPI point change since Jan 2020, with selectable spending category"
+    },
+    "data": {
+      "url": "data/cpi_2d_state.csv"
+    },
+    "params": [
+      {
+        "name": "Category_selection",
+        "value": "01",
+        "bind": {
+          "input": "select",
+          "options": ["01", "04", "06", "07", "10", "11", "13"],
+          "labels": [
+            "Food & drinks",
+            "Housing & utilities",
+            "Health",
+            "Transport",
+            "Education",
+            "Restaurants & hotels",
+            "Insurance & finance"
+          ],
+          "name": "Choose CPI category: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "calculate": "toDate(datum.date)",
+        "as": "date_parsed"
+      },
+      {
+        "calculate": "toString(datum.division)",
+        "as": "division_string"
+      },
+      {
+        "filter": "datum.division_string == Category_selection"
+      },
+      {
+        "filter": "year(datum.date_parsed) >= 2020"
+      },
+      {
+        "filter": "datum.state == 'Johor' || datum.state == 'Selangor' || datum.state == 'Sabah' || datum.state == 'W.P. Kuala Lumpur' || datum.state == 'Kelantan' || datum.state == 'Pulau Pinang'"
+      },
+      {
+        "window": [
+          {
+            "op": "first_value",
+            "field": "index",
+            "as": "baseline_index"
+          }
+        ],
+        "groupby": ["state", "division_string"],
+        "sort": [
+          {
+            "field": "date_parsed",
+            "order": "ascending"
+          }
+        ]
+      },
+      {
+        "calculate": "datum.index - datum.baseline_index",
+        "as": "cpi_point_change"
+      },
+      {
+        "calculate": "datum.division_string == '01' ? 'Food & drinks' : datum.division_string == '04' ? 'Housing & utilities' : datum.division_string == '06' ? 'Health' : datum.division_string == '07' ? 'Transport' : datum.division_string == '10' ? 'Education' : datum.division_string == '11' ? 'Restaurants & hotels' : datum.division_string == '13' ? 'Insurance & finance' : datum.division_string",
+        "as": "Category"
+      }
+    ],
+    "encoding": {
+      "x": {
+        "field": "date_parsed",
+        "type": "temporal",
+        "title": "Year",
+        "axis": {
+          "format": "%Y",
+          "labelAngle": 0,
+          "values": [
+            "2020-01-01",
+            "2021-01-01",
+            "2022-01-01",
+            "2023-01-01",
+            "2024-01-01",
+            "2025-01-01",
+            "2026-01-01"
+          ]
+        }
+      },
+      "y": {
+        "field": "cpi_point_change",
+        "type": "quantitative",
+        "title": "CPI point change since Jan 2020",
+        "axis": {
+          "grid": true
+        }
+      }
+    },
+    "layer": [
+      {
+        "mark": {
+          "type": "line",
+          "strokeWidth": 2.2,
+          "opacity": 0.72
+        },
+        "encoding": {
+          "color": {
+            "field": "state",
+            "type": "nominal",
+            "title": "State",
+            "scale": {
+              "domain": [
+                "Johor",
+                "Kelantan",
+                "Pulau Pinang",
+                "Sabah",
+                "Selangor",
+                "W.P. Kuala Lumpur"
+              ],
+              "range": [
+                "#1f4e79",
+                "#8e44ad",
+                "#e67e22",
+                "#2ecc71",
+                "#000000",
+                "#d62728"
+              ]
+            },
+            "legend": {
+              "orient": "right",
+              "symbolOpacity": 1,
+              "symbolSize": 120,
+              "symbolStrokeWidth": 4
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 80,
+          "opacity": 0.001
+        },
+        "encoding": {
+          "color": {
+            "field": "state",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Johor",
+                "Kelantan",
+                "Pulau Pinang",
+                "Sabah",
+                "Selangor",
+                "W.P. Kuala Lumpur"
+              ],
+              "range": [
+                "#1f4e79",
+                "#8e44ad",
+                "#e67e22",
+                "#2ecc71",
+                "#000000",
+                "#d62728"
+              ]
+            },
+            "legend": null
+          },
+          "tooltip": [
+            {
+              "field": "state",
+              "type": "nominal",
+              "title": "State"
+            },
+            {
+              "field": "Category",
+              "type": "nominal",
+              "title": "Selected category"
+            },
+            {
+              "field": "date_parsed",
+              "type": "temporal",
+              "title": "Month",
+              "format": "%b %Y"
+            },
+            {
+              "field": "index",
+              "type": "quantitative",
+              "title": "CPI index",
+              "format": ".1f"
+            },
+            {
+              "field": "baseline_index",
+              "type": "quantitative",
+              "title": "Baseline CPI in Jan 2020",
+              "format": ".1f"
+            },
+            {
+              "field": "cpi_point_change",
+              "type": "quantitative",
+              "title": "Point change since Jan 2020",
+              "format": ".1f"
+            }
+          ]
+        }
+      }
+    ],
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 12,
+        "titleFontSize": 13,
+        "labelLimit": 180
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12,
+        "anchor": "middle"
+      }
+    }
+  }

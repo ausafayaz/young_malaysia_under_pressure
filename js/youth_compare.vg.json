@@ -1,0 +1,106 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 330,
+    "title": {
+      "text": "Youth unemployment is higher for the 15–24 age group",
+      "subtitle": "Comparison of unemployment rates for ages 15–24 and 15–30"
+    },
+    "data": {
+      "url": "data/lfs_month_youth.csv"
+    },
+    "transform": [
+      {
+        "calculate": "datum.unemployed_15_30",
+        "as": "rate_15_24"
+      },
+      {
+        "calculate": "datum.u_rate_15_30",
+        "as": "rate_15_30"
+      },
+      {
+        "fold": ["rate_15_24", "rate_15_30"],
+        "as": ["age_group_key", "unemployment_rate"]
+      },
+      {
+        "calculate": "datum.age_group_key == 'rate_15_24' ? 'Age 15–24' : 'Age 15–30'",
+        "as": "Age group"
+      }
+    ],
+    "mark": {
+      "type": "line",
+      "point": {
+        "filled": true,
+        "size": 22
+      },
+      "strokeWidth": 2.5
+    },
+    "encoding": {
+      "x": {
+        "field": "date",
+        "type": "temporal",
+        "title": "Date",
+        "axis": {
+          "format": "%Y",
+          "labelAngle": 0
+        }
+      },
+      "y": {
+        "field": "unemployment_rate",
+        "type": "quantitative",
+        "title": "Unemployment rate (%)",
+        "scale": {
+          "zero": false
+        }
+      },
+      "color": {
+        "field": "Age group",
+        "type": "nominal",
+        "scale": {
+          "domain": ["Age 15–24", "Age 15–30"],
+          "range": ["#c65a3a", "#2f6f9f"]
+        },
+        "legend": {
+          "title": "Youth age group"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "date",
+          "type": "temporal",
+          "title": "Date",
+          "format": "%b %Y"
+        },
+        {
+          "field": "Age group",
+          "type": "nominal"
+        },
+        {
+          "field": "unemployment_rate",
+          "type": "quantitative",
+          "title": "Unemployment rate (%)",
+          "format": ".1f"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter"
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12
+      }
+    }
+  }

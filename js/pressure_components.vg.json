@@ -1,0 +1,137 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 520,
+    "title": {
+      "text": "What drives each state’s combined pressure score?",
+      "subtitle": "Breakdown of unemployment, CPI and spending-pressure contributions for all states"
+    },
+    "data": {
+      "url": "data/pressure_index.csv"
+    },
+    "transform": [
+      {
+        "fold": [
+          "unemployment_score",
+          "cpi_score",
+          "spending_score"
+        ],
+        "as": [
+          "component",
+          "component_score"
+        ]
+      },
+      {
+        "calculate": "datum.component == 'unemployment_score' ? 'Unemployment' : datum.component == 'cpi_score' ? 'CPI change' : 'Spending pressure'",
+        "as": "Pressure component"
+      },
+      {
+        "calculate": "datum.component_score / 3",
+        "as": "component_contribution"
+      }
+    ],
+    "mark": {
+      "type": "bar",
+      "cornerRadiusEnd": 3
+    },
+    "encoding": {
+      "x": {
+        "field": "component_contribution",
+        "type": "quantitative",
+        "title": "Contribution to combined pressure score",
+        "stack": "zero",
+        "axis": {
+          "grid": true,
+          "tickCount": 6
+        }
+      },
+      "y": {
+        "field": "state",
+        "type": "nominal",
+        "title": null,
+        "sort": {
+          "field": "pressure_score",
+          "order": "descending"
+        },
+        "axis": {
+          "labelLimit": 150
+        }
+      },
+      "color": {
+        "field": "Pressure component",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "Unemployment",
+            "CPI change",
+            "Spending pressure"
+          ],
+          "range": [
+            "#2f6f9f",
+            "#f28e2b",
+            "#7b61a8"
+          ]
+        },
+        "legend": {
+          "title": null,
+          "orient": "top",
+          "direction": "horizontal"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "Pressure component",
+          "type": "nominal",
+          "title": "Component"
+        },
+        {
+          "field": "component_score",
+          "type": "quantitative",
+          "title": "Normalised component score",
+          "format": ".1f"
+        },
+        {
+          "field": "component_contribution",
+          "type": "quantitative",
+          "title": "Contribution to final score",
+          "format": ".1f"
+        },
+        {
+          "field": "pressure_score",
+          "type": "quantitative",
+          "title": "Combined pressure score",
+          "format": ".1f"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12,
+        "anchor": "middle"
+      }
+    }
+  }

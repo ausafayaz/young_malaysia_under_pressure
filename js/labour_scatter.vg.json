@@ -1,0 +1,147 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 390,
+    "title": {
+      "text": "Participation vs unemployment",
+      "subtitle": "Each bubble represents one Malaysian state"
+    },
+    "data": {
+      "url": "data/lfs_qtr_state.csv"
+    },
+    "transform": [
+      {
+        "calculate": "toDate(datum.date)",
+        "as": "date_parsed"
+      },
+      {
+        "window": [
+          {
+            "op": "rank",
+            "as": "latest_rank"
+          }
+        ],
+        "groupby": ["state"],
+        "sort": [
+          {
+            "field": "date_parsed",
+            "order": "descending"
+          }
+        ]
+      },
+      {
+        "filter": "datum.latest_rank == 1"
+      }
+    ],
+    "mark": {
+      "type": "circle",
+      "color": "#2f6f9f",
+      "opacity": 0.68,
+      "stroke": "white",
+      "strokeWidth": 1.2
+    },
+    "encoding": {
+      "x": {
+        "field": "p_rate",
+        "type": "quantitative",
+        "title": "Labour force participation rate (%)",
+        "scale": {
+          "zero": false
+        },
+        "axis": {
+          "grid": true,
+          "tickCount": 5
+        }
+      },
+      "y": {
+        "field": "u_rate",
+        "type": "quantitative",
+        "title": "Unemployment rate (%)",
+        "scale": {
+          "zero": false
+        },
+        "axis": {
+          "grid": true,
+          "tickCount": 5
+        }
+      },
+      "size": {
+        "field": "lf",
+        "type": "quantitative",
+        "title": "Labour force size ('000 persons)",
+        "scale": {
+          "range": [80, 850]
+        },
+        "legend": {
+          "orient": "bottom",
+          "direction": "horizontal",
+          "values": [500, 1000, 2000, 3000, 4000],
+          "format": ".0f"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "p_rate",
+          "type": "quantitative",
+          "title": "Participation rate (%)",
+          "format": ".1f"
+        },
+        {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment rate (%)",
+          "format": ".1f"
+        },
+        {
+          "field": "lf",
+          "type": "quantitative",
+          "title": "Labour force ('000 persons)",
+          "format": ",.1f"
+        },
+        {
+          "field": "lf_unemployed",
+          "type": "quantitative",
+          "title": "Unemployed persons ('000)",
+          "format": ",.1f"
+        },
+        {
+          "field": "date",
+          "type": "temporal",
+          "title": "Quarter",
+          "format": "%b %Y"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11,
+        "symbolStrokeColor": "#666666",
+        "symbolFillColor": "#2f6f9f"
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 16,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 11,
+        "anchor": "middle"
+      }
+    }
+  }

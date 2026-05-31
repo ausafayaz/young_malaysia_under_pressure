@@ -1,0 +1,123 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 390,
+    "title": {
+      "text": "Spending pressure by state",
+      "subtitle": "Derived ratio: mean expenditure divided by mean income, 2022"
+    },
+    "data": {
+      "url": "data/hies_state.csv"
+    },
+    "transform": [
+      {
+        "calculate": "datum.expenditure_mean / datum.income_mean",
+        "as": "spending_pressure_ratio"
+      },
+      {
+        "calculate": "datum.spending_pressure_ratio >= 0.68 ? 'Higher spending pressure' : 'Lower spending pressure'",
+        "as": "Pressure group"
+      }
+    ],
+    "mark": {
+      "type": "bar",
+      "cornerRadiusEnd": 4
+    },
+    "encoding": {
+      "x": {
+        "field": "spending_pressure_ratio",
+        "type": "quantitative",
+        "title": "Expenditure / income",
+        "axis": {
+          "format": ".0%",
+          "grid": true,
+          "tickCount": 5
+        }
+      },
+      "y": {
+        "field": "state",
+        "type": "nominal",
+        "title": null,
+        "sort": "-x",
+        "axis": {
+          "labelLimit": 120,
+          "labelFontSize": 10
+        }
+      },
+      "color": {
+        "field": "Pressure group",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "Higher spending pressure",
+            "Lower spending pressure"
+          ],
+          "range": [
+            "#b85c4a",
+            "#2f6f9f"
+          ]
+        },
+        "legend": {
+          "title": null,
+          "orient": "bottom",
+          "direction": "horizontal"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "income_mean",
+          "type": "quantitative",
+          "title": "Mean income (RM)",
+          "format": ",.0f"
+        },
+        {
+          "field": "expenditure_mean",
+          "type": "quantitative",
+          "title": "Mean expenditure (RM)",
+          "format": ",.0f"
+        },
+        {
+          "field": "spending_pressure_ratio",
+          "type": "quantitative",
+          "title": "Expenditure / income",
+          "format": ".0%"
+        },
+        {
+          "field": "poverty",
+          "type": "quantitative",
+          "title": "Poverty rate (%)",
+          "format": ".1f"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 16,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 11,
+        "anchor": "middle"
+      }
+    }
+  }

@@ -1,0 +1,120 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 520,
+    "title": {
+      "text": "Unemployment pressure across Malaysia",
+      "subtitle": "State unemployment rate, latest available quarter"
+    },
+    "data": {
+      "url": "data/malaysia.state.geojson",
+      "format": {
+        "type": "json",
+        "property": "features"
+      }
+    },
+    "transform": [
+      {
+        "calculate": "datum.properties.name == 'WP K Lumpur' ? 'W.P. Kuala Lumpur' : datum.properties.name == 'WP Labuan' ? 'W.P. Labuan' : datum.properties.name == 'WP Putrajaya' ? 'W.P. Putrajaya' : datum.properties.name",
+        "as": "csv_state_name"
+      },
+      {
+        "lookup": "csv_state_name",
+        "from": {
+          "data": {
+            "url": "data/lfs_state_latest.csv"
+          },
+          "key": "state",
+          "fields": [
+            "date",
+            "state",
+            "lf",
+            "lf_employed",
+            "lf_unemployed",
+            "lf_outside",
+            "p_rate",
+            "u_rate"
+          ]
+        }
+      }
+    ],
+    "projection": {
+      "type": "mercator",
+      "center": [109.5, 4.2],
+      "scale": 2400
+    },
+    "mark": {
+      "type": "geoshape",
+      "stroke": "white",
+      "strokeWidth": 0.8
+    },
+    "encoding": {
+      "color": {
+        "field": "u_rate",
+        "type": "quantitative",
+        "title": "Unemployment rate (%)",
+        "scale": {
+          "scheme": "blues",
+          "domain": [1, 6]
+        },
+        "legend": {
+          "orient": "right"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "csv_state_name",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment rate (%)",
+          "format": ".1f"
+        },
+        {
+          "field": "p_rate",
+          "type": "quantitative",
+          "title": "Participation rate (%)",
+          "format": ".1f"
+        },
+        {
+          "field": "lf",
+          "type": "quantitative",
+          "title": "Labour force ('000)",
+          "format": ",.1f"
+        },
+        {
+          "field": "lf_unemployed",
+          "type": "quantitative",
+          "title": "Unemployed persons ('000)",
+          "format": ",.1f"
+        },
+        {
+          "field": "date",
+          "type": "temporal",
+          "title": "Quarter",
+          "format": "%b %Y"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12,
+        "anchor": "middle"
+      }
+    }
+  }

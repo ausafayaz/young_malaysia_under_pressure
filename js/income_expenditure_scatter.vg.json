@@ -1,0 +1,222 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 390,
+    "title": {
+      "text": "Income vs spending pressure",
+      "subtitle": "Household Income and Expenditure Survey state data, 2022"
+    },
+    "data": {
+      "url": "data/hies_state.csv"
+    },
+    "transform": [
+      {
+        "calculate": "datum.expenditure_mean / datum.income_mean",
+        "as": "spending_pressure_ratio"
+      },
+      {
+        "calculate": "datum.spending_pressure_ratio >= 0.68 ? 'Higher spending pressure' : 'Lower spending pressure'",
+        "as": "Pressure group"
+      }
+    ],
+    "layer": [
+      {
+        "data": {
+          "values": [
+            {
+              "income_mean": 3000,
+              "reference_expenditure": 2040
+            },
+            {
+              "income_mean": 14500,
+              "reference_expenditure": 9860
+            }
+          ]
+        },
+        "mark": {
+          "type": "line",
+          "strokeDash": [6, 4],
+          "stroke": "#9aa6b2",
+          "strokeWidth": 1.5
+        },
+        "encoding": {
+          "x": {
+            "field": "income_mean",
+            "type": "quantitative",
+            "title": "Mean household income (RM)",
+            "scale": {
+              "domain": [3000, 14500]
+            },
+            "axis": {
+              "format": ",.0f",
+              "tickCount": 6,
+              "grid": true
+            }
+          },
+          "y": {
+            "field": "reference_expenditure",
+            "type": "quantitative",
+            "title": "Mean household expenditure (RM)",
+            "scale": {
+              "domain": [2000, 10000]
+            },
+            "axis": {
+              "format": ",.0f",
+              "tickCount": 6,
+              "grid": true
+            }
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "circle",
+          "size": 160,
+          "opacity": 0.82,
+          "stroke": "white",
+          "strokeWidth": 1.2
+        },
+        "encoding": {
+          "x": {
+            "field": "income_mean",
+            "type": "quantitative",
+            "title": "Mean household income (RM)",
+            "scale": {
+              "domain": [3000, 14500]
+            },
+            "axis": {
+              "format": ",.0f",
+              "tickCount": 6,
+              "grid": true
+            }
+          },
+          "y": {
+            "field": "expenditure_mean",
+            "type": "quantitative",
+            "title": "Mean household expenditure (RM)",
+            "scale": {
+              "domain": [2000, 10000]
+            },
+            "axis": {
+              "format": ",.0f",
+              "tickCount": 6,
+              "grid": true
+            }
+          },
+          "color": {
+            "field": "Pressure group",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Higher spending pressure",
+                "Lower spending pressure"
+              ],
+              "range": [
+                "#b85c4a",
+                "#2f6f9f"
+              ]
+            },
+            "legend": {
+              "title": null,
+              "orient": "bottom",
+              "direction": "horizontal"
+            }
+          },
+          "tooltip": [
+            {
+              "field": "state",
+              "type": "nominal",
+              "title": "State"
+            },
+            {
+              "field": "income_mean",
+              "type": "quantitative",
+              "title": "Mean income (RM)",
+              "format": ",.0f"
+            },
+            {
+              "field": "income_median",
+              "type": "quantitative",
+              "title": "Median income (RM)",
+              "format": ",.0f"
+            },
+            {
+              "field": "expenditure_mean",
+              "type": "quantitative",
+              "title": "Mean expenditure (RM)",
+              "format": ",.0f"
+            },
+            {
+              "field": "spending_pressure_ratio",
+              "type": "quantitative",
+              "title": "Expenditure / income",
+              "format": ".0%"
+            },
+            {
+              "field": "poverty",
+              "type": "quantitative",
+              "title": "Poverty rate (%)",
+              "format": ".1f"
+            }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.state == 'W.P. Kuala Lumpur' || datum.state == 'Selangor' || datum.state == 'Kelantan' || datum.state == 'Melaka' || datum.state == 'Pahang'"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "dx": 8,
+          "dy": -6,
+          "fontSize": 10,
+          "font": "Inter"
+        },
+        "encoding": {
+          "x": {
+            "field": "income_mean",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "expenditure_mean",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "state",
+            "type": "nominal"
+          },
+          "color": {
+            "value": "#1f2933"
+          }
+        }
+      }
+    ],
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 16,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 11,
+        "anchor": "middle"
+      }
+    }
+  }

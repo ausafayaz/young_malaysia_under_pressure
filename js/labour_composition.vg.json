@@ -1,0 +1,139 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 430,
+    "title": {
+      "text": "How each state’s working-age population is distributed",
+      "subtitle": "Employed, unemployed and outside labour force, latest available quarter"
+    },
+    "data": {
+      "url": "data/lfs_qtr_state.csv"
+    },
+    "transform": [
+      {
+        "calculate": "toDate(datum.date)",
+        "as": "date_parsed"
+      },
+      {
+        "window": [
+          {
+            "op": "rank",
+            "as": "latest_rank"
+          }
+        ],
+        "groupby": ["state"],
+        "sort": [
+          {
+            "field": "date_parsed",
+            "order": "descending"
+          }
+        ]
+      },
+      {
+        "filter": "datum.latest_rank == 1"
+      },
+      {
+        "fold": ["lf_employed", "lf_unemployed", "lf_outside"],
+        "as": ["Labour category", "People"]
+      },
+      {
+        "calculate": "datum['Labour category'] == 'lf_employed' ? 'Employed' : datum['Labour category'] == 'lf_unemployed' ? 'Unemployed' : 'Outside labour force'",
+        "as": "Category"
+      }
+    ],
+    "mark": {
+      "type": "bar",
+      "cornerRadiusEnd": 2
+    },
+    "encoding": {
+      "x": {
+        "field": "People",
+        "type": "quantitative",
+        "title": "title:Share of working-age population",
+        "stack": "normalize",
+        "axis": {
+          "format": ".0%",
+          "grid": true
+        }
+      },
+      "y": {
+        "field": "state",
+        "type": "nominal",
+        "title": null,
+        "sort": {
+          "field": "u_rate",
+          "order": "descending"
+        },
+        "axis": {
+          "labelLimit": 150
+        }
+      },
+      "color": {
+        "field": "Category",
+        "type": "nominal",
+        "scale": {
+          "domain": ["Employed", "Unemployed", "Outside labour force"],
+          "range": ["#2f6f9f", "#b85c4a", "#d7e3ec"]
+        },
+        "legend": {
+          "title": null,
+          "orient": "top",
+          "direction": "horizontal"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "Category",
+          "type": "nominal",
+          "title": "Category"
+        },
+        {
+          "field": "People",
+          "type": "quantitative",
+          "title": "People ('000)",
+          "format": ",.1f"
+        },
+        {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment rate (%)",
+          "format": ".1f"
+        },
+        {
+          "field": "date",
+          "type": "temporal",
+          "title": "Quarter",
+          "format": "%b %Y"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12,
+        "anchor": "middle"
+      }
+    }
+  }

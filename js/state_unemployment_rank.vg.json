@@ -1,0 +1,112 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 390,
+    "title": {
+      "text": "Unemployment by state",
+      "subtitle": "Latest available quarter"
+    },
+    "data": {
+      "url": "data/lfs_qtr_state.csv"
+    },
+    "transform": [
+      {
+        "calculate": "toDate(datum.date)",
+        "as": "date_parsed"
+      },
+      {
+        "window": [
+          {
+            "op": "rank",
+            "as": "latest_rank"
+          }
+        ],
+        "groupby": ["state"],
+        "sort": [
+          {
+            "field": "date_parsed",
+            "order": "descending"
+          }
+        ]
+      },
+      {
+        "filter": "datum.latest_rank == 1"
+      }
+    ],
+    "mark": {
+      "type": "bar",
+      "cornerRadiusEnd": 4,
+      "color": "#2f6f9f"
+    },
+    "encoding": {
+      "x": {
+        "field": "u_rate",
+        "type": "quantitative",
+        "title": "Unemployment rate (%)",
+        "axis": {
+          "grid": true,
+          "tickCount": 6
+        }
+      },
+      "y": {
+        "field": "state",
+        "type": "nominal",
+        "title": null,
+        "sort": "-x",
+        "axis": {
+          "labelLimit": 115,
+          "labelFontSize": 10
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment rate (%)",
+          "format": ".1f"
+        },
+        {
+          "field": "lf_unemployed",
+          "type": "quantitative",
+          "title": "Unemployed persons ('000)",
+          "format": ",.1f"
+        },
+        {
+          "field": "lf",
+          "type": "quantitative",
+          "title": "Labour force ('000)",
+          "format": ",.1f"
+        },
+        {
+          "field": "date",
+          "type": "temporal",
+          "title": "Quarter",
+          "format": "%b %Y"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11,
+        "gridColor": "#e6edf3"
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 16,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 11,
+        "anchor": "middle"
+      }
+    }
+  }

@@ -1,0 +1,25 @@
+var youthTrend = "js/youth_trend.vg.json";
+var youthCompare = "js/youth_compare.vg.json";
+var stateUnemploymentRank = "js/state_unemployment_rank.vg.json";
+var labourScatter = "js/labour_scatter.vg.json";
+var cpiHeatmap = "js/cpi_heatmap.vg.json";
+var incomeExpenditureScatter = "js/income_expenditure_scatter.vg.json";
+var incomePressureRank = "js/income_pressure_rank.vg.json";
+var labourComposition = "js/labour_composition.vg.json";
+var stateUnemploymentMap = "js/state_unemployment_map.vg.json";
+var cpiTrend = "js/cpi_trend.vg.json";
+var pressureIndex = "js/pressure_index.vg.json";
+var pressureComponents = "js/pressure_components.vg.json";
+
+vegaEmbed("#youth_trend", youthTrend, { actions: false }).catch(console.error);
+vegaEmbed("#youth_compare", youthCompare, { actions: false }).catch(console.error);
+vegaEmbed("#state_unemployment_rank", stateUnemploymentRank, { actions: false }).catch(console.error);
+vegaEmbed("#labour_scatter", labourScatter, { actions: false }).catch(console.error);
+vegaEmbed("#cpi_heatmap", cpiHeatmap, { actions: false }).catch(console.error);
+vegaEmbed("#income_expenditure_scatter", incomeExpenditureScatter, { actions: false }).catch(console.error);
+vegaEmbed("#income_pressure_rank", incomePressureRank, { actions: false }).catch(console.error);
+vegaEmbed("#labour_composition", labourComposition, { actions: false }).catch(console.error);
+vegaEmbed("#state_unemployment_map", stateUnemploymentMap, { actions: false }).catch(console.error);
+vegaEmbed("#cpi_trend", cpiTrend, { actions: false }).catch(console.error);
+vegaEmbed("#pressure_index", pressureIndex, { actions: false }).catch(console.error);
+vegaEmbed("#pressure_components", pressureComponents, { actions: false }).catch(console.error);

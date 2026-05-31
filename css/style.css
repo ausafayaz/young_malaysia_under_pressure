@@ -1,0 +1,239 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f5f7f4;
+    color: #1f2933;
+    font-family: 'Inter', Arial, sans-serif;
+  }
+  
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  
+  .hero {
+    background: linear-gradient(135deg, #16324f, #2f6f9f);
+    color: white;
+    padding: 56px 48px;
+    border-radius: 28px;
+    margin-bottom: 28px;
+  }
+  
+  .eyebrow {
+    margin: 0 0 14px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 13px;
+    font-weight: 700;
+    color: #d9ecff;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 54px;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+  
+  .subtitle {
+    max-width: 850px;
+    font-size: 22px;
+    line-height: 1.45;
+    margin: 24px 0 0 0;
+    color: #eef7ff;
+  }
+  
+  .intro-text {
+    max-width: 850px;
+    font-size: 16px;
+    line-height: 1.75;
+    margin-top: 24px;
+    color: #e7f1f8;
+  }
+  
+  .card-row {
+    margin: 0 -10px 24px -10px;
+  }
+  
+  .stat-card {
+    margin: 10px;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 10px 26px rgba(31, 41, 51, 0.08);
+    min-height: 160px;
+    border: 1px solid #e7edf2;
+  }
+  
+  .stat-label {
+    margin: 0;
+    color: #66788a;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  .stat-card h2 {
+    margin: 12px 0 8px 0;
+    font-size: 38px;
+    color: #16324f;
+  }
+  
+  .stat-note {
+    margin: 0;
+    color: #7b8794;
+    font-size: 14px;
+  }
+  
+  .section {
+    margin-top: 42px;
+  }
+  
+  .section-heading {
+    max-width: 900px;
+    margin-bottom: 18px;
+  }
+  
+  .section-heading h2 {
+    font-size: 30px;
+    margin: 0 0 12px 0;
+    color: #16324f;
+    letter-spacing: -0.02em;
+  }
+  
+  .section-heading p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: #52606d;
+  }
+  
+  .chart-card {
+    background: white;
+    border-radius: 22px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 10px 26px rgba(31, 41, 51, 0.08);
+    border: 1px solid #e7edf2;
+    overflow-x: auto;
+  }
+  
+  .full-width {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .vega-embed {
+    width: 100%;
+  }
+  
+  .method-card {
+    background: #ffffff;
+    border: 1px solid #e7edf2;
+    border-radius: 22px;
+    padding: 26px;
+    margin-top: 16px;
+    box-shadow: 0 10px 26px rgba(31, 41, 51, 0.08);
+  }
+  
+  .method-card h3 {
+    margin: 0 0 12px 0;
+    color: #16324f;
+    font-size: 24px;
+  }
+  
+  .method-card p {
+    color: #52606d;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+  }
+  
+  .formula-box {
+    background: #f5f7f4;
+    border: 1px solid #e1e8ee;
+    border-radius: 16px;
+    padding: 16px;
+  }
+  
+  .formula-box h4,
+  .final-formula h4 {
+    margin: 0 0 8px 0;
+    color: #16324f;
+    font-size: 16px;
+  }
+  
+  .formula-box code,
+  .final-formula code {
+    display: block;
+    background: #eef3f7;
+    color: #1f2933;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+  }
+  
+  .final-formula {
+    background: #f9fbfc;
+    border: 1px solid #e1e8ee;
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+  
+  .footer {
+    margin-top: 54px;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 22px;
+    color: #52606d;
+    font-size: 14px;
+    line-height: 1.7;
+    border: 1px solid #e7edf2;
+  }
+  
+  .footer p {
+    margin: 6px 0;
+  }
+  
+  @media screen and (max-width: 900px) {
+    .formula-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .page {
+      padding: 14px;
+    }
+  
+    .hero {
+      padding: 34px 24px;
+      border-radius: 20px;
+    }
+  
+    h1 {
+      font-size: 38px;
+    }
+  
+    .subtitle {
+      font-size: 18px;
+    }
+  
+    .section-heading h2 {
+      font-size: 24px;
+    }
+  }

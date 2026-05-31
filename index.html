@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Young Malaysia Under Pressure</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Pure.css grid system -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css">
+
+  <!-- My CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Vega, Vega-Lite, and Vega Embed -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <p class="eyebrow">FIT2179 Data Visualisation 2</p>
+      <h1>Young Malaysia Under Pressure</h1>
+
+      <p class="subtitle">
+        A visual story of how job pressure, living costs, and household spending combine
+        differently across Malaysian states.
+      </p>
+
+      <p class="intro-text">
+        For young Malaysians, financial pressure is not caused by one factor alone.
+        A state may have a low unemployment rate but higher living costs, while another
+        may have weaker labour conditions but lower spending pressure. This visualisation
+        follows that story step by step: first by looking at youth unemployment, then
+        comparing state labour conditions, then exploring cost-of-living changes, and
+        finally combining these signals into a custom pressure index.
+      </p>
+    </section>
+
+    <!-- KEY NUMBER CARDS -->
+    <section class="pure-g card-row">
+      <div class="pure-u-1 pure-u-md-1-3">
+        <div class="stat-card">
+          <p class="stat-label">Main audience</p>
+          <h2>Malaysia</h2>
+          <p class="stat-note">Designed for a general Malaysian audience</p>
+        </div>
+      </div>
+
+      <div class="pure-u-1 pure-u-md-1-3">
+        <div class="stat-card">
+          <p class="stat-label">Main focus</p>
+          <h2>Youth</h2>
+          <p class="stat-note">Jobs, income and cost-of-living pressure</p>
+        </div>
+      </div>
+
+      <div class="pure-u-1 pure-u-md-1-3">
+        <div class="stat-card">
+          <p class="stat-label">Main method</p>
+          <h2>Derived data</h2>
+          <p class="stat-note">Ratios, changes, normalised scores and a custom index</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1 -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>1. Are young Malaysians still facing job pressure?</h2>
+        <p>
+          The story begins with youth unemployment because employment is often the first
+          pressure point for young people entering the labour market. This line chart uses
+          monthly youth unemployment data and displays it across years to make the long-term
+          pattern easier to follow. The sharp movement around 2020 helps show how youth
+          labour conditions changed during the pandemic period and how slowly the rate
+          moved back down afterwards.
+        </p>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="youth_trend"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>2. Which youth age group faces higher unemployment?</h2>
+        <p>
+          Youth unemployment is not experienced equally by all young people. This comparison
+          separates the narrower 15–24 age group from the broader 15–30 group. The aim is to
+          show whether younger youth face stronger job pressure than older youth who may have
+          more work experience, qualifications or labour-market stability.
+        </p>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="youth_compare"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>3. Where is labour pressure highest?</h2>
+        <p>
+          After looking at national youth trends, the visualisation moves to state-level labour
+          pressure. The choropleth map gives a geographic view of unemployment across Malaysia,
+          while the supporting charts below explain the ranking, participation pattern and labour
+          force composition behind the map. Together, these visuals show that labour pressure is
+          not evenly distributed across the country.
+        </p>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="state_unemployment_map"></div>
+      </div>
+
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-lg-1-2">
+          <div class="chart-card">
+            <div id="state_unemployment_rank"></div>
+          </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-lg-1-2">
+          <div class="chart-card">
+            <div id="labour_scatter"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="labour_composition"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>4. Where is daily life becoming more expensive?</h2>
+        <p>
+          Employment pressure is only one side of the problem. Even when people are employed,
+          rising prices can reduce how far household income can go. This section uses CPI data
+          to compare cost pressure across states and spending categories. Instead of only using
+          raw CPI values, the heatmap calculates the percentage change between Jan 2024 and
+          Apr 2026. Darker orange means a larger CPI increase over that period.
+        </p>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="cpi_heatmap"></div>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="cpi_trend"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>5. Does income keep up with spending?</h2>
+        <p>
+          Cost pressure becomes more meaningful when it is compared with household income and
+          spending. This section uses the Household Income and Expenditure Survey state data
+          to compare income and expenditure across Malaysia. A derived spending-pressure ratio
+          is calculated by dividing mean expenditure by mean income. This makes the comparison
+          fairer because it shows how much of average income is being taken up by spending,
+          rather than only comparing raw income or raw expenditure values.
+        </p>
+      </div>
+
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-lg-1-2">
+          <div class="chart-card">
+            <div id="income_expenditure_scatter"></div>
+          </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-lg-1-2">
+          <div class="chart-card">
+            <div id="income_pressure_rank"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>6. Which states face the strongest combined pressure?</h2>
+        <p>
+          The final section brings the earlier ideas together. Labour pressure, CPI cost pressure
+          and spending pressure are converted into normalised scores and combined into one custom
+          pressure index. This is not an official government ranking. It is a visual storytelling
+          score created for this project to compare how different types of pressure overlap across
+          Malaysian states.
+        </p>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="pressure_index"></div>
+      </div>
+
+      <div class="chart-card full-width">
+        <div id="pressure_components"></div>
+      </div>
+
+      <div class="method-card">
+        <h3>How the combined pressure score is calculated</h3>
+
+        <p>
+          The combined pressure score uses three indicators: unemployment pressure,
+          CPI cost pressure, and spending pressure. Since these values use different
+          units, each one is first converted into a normalised score from 0 to 100.
+          A higher score means stronger pressure compared with other Malaysian states
+          in this visualisation.
+        </p>
+
+        <div class="formula-grid">
+          <div class="formula-box">
+            <h4>1. Unemployment score</h4>
+            <p>
+              Uses the latest state unemployment rate from Q3 2025.
+            </p>
+            <code>
+              (state unemployment rate - lowest unemployment rate) / (highest unemployment rate - lowest unemployment rate) × 100
+            </code>
+          </div>
+
+          <div class="formula-box">
+            <h4>2. CPI score</h4>
+            <p>
+              Uses the derived CPI percentage change from Jan 2024 to Apr 2026.
+            </p>
+            <code>
+              (state CPI change - lowest CPI change) / (highest CPI change - lowest CPI change) × 100
+            </code>
+          </div>
+
+          <div class="formula-box">
+            <h4>3. Spending score</h4>
+            <p>
+              Uses the expenditure-to-income ratio from the Household Income and Expenditure Survey 2022.
+            </p>
+            <code>
+              (state spending ratio - lowest spending ratio) / (highest spending ratio - lowest spending ratio) × 100
+            </code>
+          </div>
+        </div>
+
+        <div class="final-formula">
+          <h4>Final combined pressure score</h4>
+          <code>
+            (unemployment score + CPI score + spending score) / 3
+          </code>
+          <p>
+            Example: if a state has an unemployment score of 25.6, a CPI score of 100.0,
+            and a spending score of 57.3, then the combined score is
+            (25.6 + 100.0 + 57.3) / 3 = 61.0.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA AND DERIVED FILES SECTION -->
+    <section class="section">
+      <div class="section-heading">
+        <h2>Data sources and derived files</h2>
+        <p>
+          The visualisation uses official open datasets from data.gov.my and a Malaysia
+          GeoJSON boundary file. Some smaller derived CSV files were created from the original
+          datasets to make the Vega-Lite joins and custom score calculations clearer and faster.
+        </p>
+      </div>
+
+      <div class="method-card">
+        <h3>Original data sources</h3>
+        <p>
+          <strong>Household Income and Expenditure Survey state data:</strong>
+          <a href="https://data.gov.my/data-catalogue/hies_state" target="_blank">
+            https://data.gov.my/data-catalogue/hies_state
+          </a>
+        </p>
+        <p>
+          <strong>Consumer Price Index by state:</strong>
+          <a href="https://data.gov.my/data-catalogue/cpi_state" target="_blank">
+            https://data.gov.my/data-catalogue/cpi_state
+          </a>
+        </p>
+        <p>
+          <strong>Youth labour force data:</strong>
+          <a href="https://data.gov.my/data-catalogue/lfs_month_youth" target="_blank">
+            https://data.gov.my/data-catalogue/lfs_month_youth
+          </a>
+        </p>
+        <p>
+          <strong>Malaysia state GeoJSON boundary file:</strong>
+          <a href="https://github.com/mptwaktusolat/jakim.geojson/blob/master/malaysia.state.geojson" target="_blank">
+            https://github.com/mptwaktusolat/jakim.geojson/blob/master/malaysia.state.geojson
+          </a>
+        </p>
+
+        <h3>Derived CSV files used in the project</h3>
+        <p>
+          <strong>lfs_state_latest.csv:</strong>
+          A filtered version of the quarterly labour force data containing only the latest
+          available state-level records. It is used in the Malaysia unemployment map and
+          the state labour-pressure charts so that each state has one current value.
+        </p>
+        <p>
+          <strong>pressure_index.csv:</strong>
+          A custom derived dataset created for the final section. It combines state
+          unemployment pressure, CPI percentage change and spending-pressure ratio into
+          normalised component scores and a final combined pressure score.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p><strong>Author:</strong> Ausaf Ayaz</p>
+      <p><strong>Date:</strong> 29 May 2026</p>
+      <p>
+        <strong>Data sources:</strong> OpenDOSM / data.gov.my datasets on youth unemployment,
+        labour force, CPI, and household income/expenditure, plus a Malaysia state GeoJSON
+        boundary file from GitHub.
+      </p>
+      <p>
+        <strong>Generative AI acknowledgement:</strong> Generative AI was used for guidance
+        on how to design the website and to learn more about Vega-Lite and JavaScript.
+       
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- JavaScript file that loads all Vega-Lite charts -->
+  <script src="js/vega_lite_vis.js"></script>
+
+</body>
+</html>

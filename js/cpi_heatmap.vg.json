@@ -1,0 +1,139 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 550,
+    "title": {
+      "text": "Cost pressure is uneven across states and spending categories",
+      "subtitle": "Derived CPI percentage change from Jan 2024 to Apr 2026"
+    },
+    "data": {
+      "url": "data/cpi_2d_state.csv"
+    },
+    "transform": [
+      {
+        "filter": "datum.date == '2024-01-01' || datum.date == '2026-04-01'"
+      },
+      {
+        "filter": "datum.division != 'overall'"
+      },
+      {
+        "pivot": "date",
+        "value": "index",
+        "groupby": ["state", "division"]
+      },
+      {
+        "calculate": "(datum['2026-04-01'] - datum['2024-01-01']) / datum['2024-01-01'] * 100",
+        "as": "cpi_change_pct"
+      },
+      {
+        "calculate": "datum.division == '01' ? 'Food & drinks' : datum.division == '02' ? 'Alcohol & tobacco' : datum.division == '03' ? 'Clothing' : datum.division == '04' ? 'Housing & utilities' : datum.division == '05' ? 'Furnishings' : datum.division == '06' ? 'Health' : datum.division == '07' ? 'Transport' : datum.division == '08' ? 'Communication' : datum.division == '09' ? 'Recreation' : datum.division == '10' ? 'Education' : datum.division == '11' ? 'Restaurants & hotels' : datum.division == '12' ? 'Miscellaneous' : datum.division == '13' ? 'Insurance & finance' : datum.division",
+        "as": "Category"
+      }
+    ],
+    "mark": {
+      "type": "rect",
+      "stroke": "white",
+      "strokeWidth": 1
+    },
+    "encoding": {
+      "x": {
+        "field": "Category",
+        "type": "nominal",
+        "title": null,
+        "axis": {
+          "labelAngle": -35,
+          "labelLimit": 130,
+          "labelFontSize": 10
+        },
+        "sort": [
+          "Food & drinks",
+          "Alcohol & tobacco",
+          "Clothing",
+          "Housing & utilities",
+          "Furnishings",
+          "Health",
+          "Transport",
+          "Communication",
+          "Recreation",
+          "Education",
+          "Restaurants & hotels",
+          "Miscellaneous",
+          "Insurance & finance"
+        ]
+      },
+      "y": {
+        "field": "state",
+        "type": "nominal",
+        "title": null,
+        "sort": "ascending",
+        "axis": {
+          "labelLimit": 150,
+          "labelFontSize": 11
+        }
+      },
+      "color": {
+        "field": "cpi_change_pct",
+        "type": "quantitative",
+        "title": "CPI change (%)",
+        "scale": {
+          "scheme": "oranges"
+        }
+      },
+      "tooltip": [
+        {
+          "field": "state",
+          "type": "nominal",
+          "title": "State"
+        },
+        {
+          "field": "Category",
+          "type": "nominal",
+          "title": "Spending category"
+        },
+        {
+          "field": "2024-01-01",
+          "type": "quantitative",
+          "title": "CPI in Jan 2024",
+          "format": ".1f"
+        },
+        {
+          "field": "2026-04-01",
+          "type": "quantitative",
+          "title": "CPI in Apr 2026",
+          "format": ".1f"
+        },
+        {
+          "field": "cpi_change_pct",
+          "type": "quantitative",
+          "title": "CPI percentage change",
+          "format": ".1f"
+        }
+      ]
+    },
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 10,
+        "titleFontSize": 11,
+        "grid": false
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "orient": "right"
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12,
+        "anchor": "middle"
+      }
+    }
+  }

@@ -1,0 +1,187 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 470,
+    "title": {
+      "text": "Combined pressure index by state",
+      "subtitle": "Custom score: unemployment Q3 2025 + CPI change Jan 2024–Apr 2026 + spending ratio from Household Income and Expenditure Survey 2022"
+    },
+    "data": {
+      "url": "data/pressure_index.csv"
+    },
+    "transform": [
+      {
+        "calculate": "datum.pressure_score >= 60 ? 'Higher combined pressure' : 'Lower combined pressure'",
+        "as": "Pressure group"
+      },
+      {
+        "calculate": "'Score = average of normalised unemployment, CPI change and expenditure-to-income pressure. Higher score means stronger combined pressure in this visualisation.'",
+        "as": "score_explanation"
+      }
+    ],
+    "layer": [
+      {
+        "mark": {
+          "type": "bar",
+          "cornerRadiusEnd": 5
+        },
+        "encoding": {
+          "x": {
+            "field": "pressure_score",
+            "type": "quantitative",
+            "title": "Combined pressure score",
+            "scale": {
+              "domain": [0, 80]
+            },
+            "axis": {
+              "grid": true,
+              "tickCount": 6
+            }
+          },
+          "y": {
+            "field": "state",
+            "type": "nominal",
+            "title": null,
+            "sort": "-x",
+            "axis": {
+              "labelLimit": 150
+            }
+          },
+          "color": {
+            "field": "Pressure group",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Higher combined pressure",
+                "Lower combined pressure"
+              ],
+              "range": [
+                "#b85c4a",
+                "#2f6f9f"
+              ]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top",
+              "direction": "horizontal"
+            }
+          },
+          "tooltip": [
+            {
+              "field": "state",
+              "type": "nominal",
+              "title": "State"
+            },
+            {
+              "field": "pressure_score",
+              "type": "quantitative",
+              "title": "Combined pressure score",
+              "format": ".1f"
+            },
+            {
+              "field": "score_explanation",
+              "type": "nominal",
+              "title": "How score is calculated"
+            },
+            {
+              "field": "u_rate",
+              "type": "quantitative",
+              "title": "Unemployment rate Q3 2025 (%)",
+              "format": ".1f"
+            },
+            {
+              "field": "cpi_change_pct",
+              "type": "quantitative",
+              "title": "CPI change Jan 2024–Apr 2026 (%)",
+              "format": ".1f"
+            },
+            {
+              "field": "spending_pressure_ratio",
+              "type": "quantitative",
+              "title": "Expenditure / income, 2022",
+              "format": ".0%"
+            },
+            {
+              "field": "unemployment_score",
+              "type": "quantitative",
+              "title": "Normalised unemployment score",
+              "format": ".1f"
+            },
+            {
+              "field": "cpi_score",
+              "type": "quantitative",
+              "title": "Normalised CPI score",
+              "format": ".1f"
+            },
+            {
+              "field": "spending_score",
+              "type": "quantitative",
+              "title": "Normalised spending score",
+              "format": ".1f"
+            }
+          ]
+        }
+      },
+      {
+        "mark": {
+          "type": "rule",
+          "strokeDash": [5, 5],
+          "stroke": "#000000",
+          "strokeWidth": 1.5
+        },
+        "encoding": {
+          "x": {
+            "datum": 60
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "dx": 6,
+          "dy": -8,
+          "font": "Inter",
+          "fontSize": 11,
+          "fontWeight": "bold",
+          "color": "#000000"
+        },
+        "encoding": {
+          "x": {
+            "datum": 60
+          },
+          "y": {
+            "datum": "Negeri Sembilan"
+          },
+          "text": {
+            "value": "Higher pressure threshold"
+          }
+        }
+      }
+    ],
+    "config": {
+      "view": {
+        "stroke": null
+      },
+      "axis": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12,
+        "gridColor": "#e6edf3"
+      },
+      "legend": {
+        "labelFont": "Inter",
+        "titleFont": "Inter",
+        "labelFontSize": 11,
+        "titleFontSize": 12
+      },
+      "title": {
+        "font": "Inter",
+        "fontSize": 18,
+        "subtitleFont": "Inter",
+        "subtitleFontSize": 12,
+        "anchor": "middle"
+      }
+    }
+  }
