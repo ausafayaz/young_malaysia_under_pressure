@@ -4,7 +4,7 @@
     "height": 520,
     "title": {
       "text": "Unemployment pressure across Malaysia",
-      "subtitle": "State unemployment rate, latest available quarter"
+      "subtitle": "State unemployment rate, 2025 q3"
     },
     "data": {
       "url": "data/malaysia.state.geojson",

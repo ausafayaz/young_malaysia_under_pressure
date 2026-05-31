@@ -4,7 +4,7 @@
     "height": 390,
     "title": {
       "text": "Unemployment by state",
-      "subtitle": "Latest available quarter"
+      "subtitle": "2025q3"
     },
     "data": {
       "url": "data/lfs_qtr_state.csv"
