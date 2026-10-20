@@ -49,7 +49,7 @@
       "x": {
         "field": "People",
         "type": "quantitative",
-        "title": "title:Share of working-age population",
+        "title": "Share of working-age population",
         "stack": "normalize",
         "axis": {
           "format": ".0%",
