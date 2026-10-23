@@ -11,7 +11,7 @@
     },
     "transform": [
       {
-        "calculate": "datum.unemployed_15_30",
+        "calculate": "datum.u_rate_15_24",
         "as": "rate_15_24"
       },
       {
